@@ -1,6 +1,8 @@
 # import model.py methods (A, C, MI, ...) 
 # which contains some main packages (numpy, numba,..)
 from src import *
+import pickle #to save python objects
+
 
 # import plotting stuff
 import matplotlib.pyplot as plt
@@ -24,7 +26,7 @@ def MI_vs_L(L_array,run_array,p_array,V,lamb):
                 realisations_array[k] = L*MI_by_L_NESS(V,lamb,A_mat,subsys_A,subsys_B)
             MI_array[L_ind] = np.sum(realisations_array)/len(realisations_array)
             MI_err_array[L_ind] =stnd_err(realisations_array)
-        plotting_data.append(  (L_array, MI_array, MI_err_array)  )
+        plotting_data.append(  (L_array, MI_array, MI_err_array, p)  )
     return plotting_data
 
 #################
@@ -32,18 +34,23 @@ def MI_vs_L(L_array,run_array,p_array,V,lamb):
 #################
 
 # parameter space
-L_array = np.array([10,20,30])
-run_array = np.array([30,20,10])
+L_array = np.arange(100,1000,100)
+run_array = np.arange(500,50,-50)
 # L_array = np.array([400,800,1200,1600,2000])
 # run_array = np.array([500,250,100,50,10])
-p_array = np.array([0.4,1.13,4])
+p_array = np.array([0.6,1.13,1.6])
 V, lamb = 0, 0
 
 plotting_data = MI_vs_L(L_array,run_array,p_array,V,lamb)
-pick
+with open("data/MI_vs_L_no_boundaries.ob", 'wb') as fp:
+    pickle.dump(plotting_data, fp)
+
+with open ("data/MI_vs_L_no_boundaries.ob", 'rb') as fp:
+    plotting_data = pickle.load(fp)
 
 for data in plotting_data:
-    L_array, MI_array, MI_err_array = data
-    plt.errorbar(L_array,MI_array,MI_err_array)
-
+    L_array, MI_array, MI_err_array, p = data
+    plt.errorbar(L_array,MI_array,MI_err_array,label="p="+str(p),ms=2,lw=1)
+    
+plt.legend()
 plt.show()
