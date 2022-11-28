@@ -34,14 +34,13 @@ def MI_vs_L(L_array,run_array,p_array,V,lamb):
 #################
 
 # parameter space
-L_array = np.arange(100,1000,100)
-run_array = np.arange(500,50,-50)
-# L_array = np.array([400,800,1200,1600,2000])
-# run_array = np.array([500,250,100,50,10])
-p_array = np.array([0.6,1.13,1.6])
+# L_array = np.arange(100,1000,100)
+# run_array = np.arange(500,50,-50)
+L_array = np.array([400,800,1200,1600,2000])
+run_array = np.array([500,100,50,50,10])
+p_array = np.array([0.6,0.9,1,1.13,1.6])
 V, lamb = 0, 0
 
-print(change)
 # plotting_data = MI_vs_L(L_array,run_array,p_array,V,lamb)
 # with open("data/MI_vs_L_no_boundaries.ob", 'wb') as fp:
 #     pickle.dump(plotting_data, fp)
@@ -49,9 +48,21 @@ print(change)
 with open ("data/MI_vs_L_no_boundaries.ob", 'rb') as fp:
     plotting_data = pickle.load(fp)
 
+plt.rcParams['figure.dpi'] = 300
+plt.rcParams['savefig.dpi'] = 300
+pt = 0.0138889 
+fig, ax  = plt.subplots(1,1,figsize = (246*pt,150*pt))
 for data in plotting_data:
     L_array, MI_array, MI_err_array, p = data
-    plt.errorbar(L_array,MI_array,MI_err_array,label="p = "+str(p),ms=20,lw=1)
+    # gradient = np.around( np.log(MI_array[-1])-np.log(MI_array[0]),2 )
+    gradient =  np.round((np.log(MI_array[-1])- np.log(MI_array[0]))/(np.log(L_array[-1])-np.log(L_array[0])),2)
+    ax.errorbar(L_array,MI_array,yerr=MI_err_array,label="p="+str(p)+", g (log)="+str(gradient),ms=2,marker="o",lw=1)
     
-plt.legend()
+
+ax.set_yscale("log")
+ax.set_xscale("log")
+ax.set_ylabel(r"$\mathcal{I}$")
+ax.set_xlabel(r"$L$")
+plt.legend(fontsize=5,loc="lower right")
+plt.tight_layout()
 plt.show()
