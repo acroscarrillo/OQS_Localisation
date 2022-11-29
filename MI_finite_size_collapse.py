@@ -14,7 +14,7 @@ plt.rcParams["font.family"] = "Times New Roman"
 # Data generation method #
 ##########################
 @njit(nogil=True, parallel=False)
-def O(params,data_in=np.load("zoomed_crit_reg_data.npy")):
+def O(params,data_in=np.load("data/zoomed_crit_reg_data.npy")):
     
     p_c, nu, zeta = params[0], params[1], params[2]
     
@@ -22,7 +22,7 @@ def O(params,data_in=np.load("zoomed_crit_reg_data.npy")):
     # data    structure y|x|d
     data  = np.zeros((len(data_in),3), dtype=np.float64)
     for i in range(len(data_in)):
-        data[i,0] = data_in[i,0]*data_in[i,2]                       # y_i
+        data[i,0] = (data_in[i,2]**(zeta/nu))*data_in[i,0]#*data_in[i,2]                       # y_i
         data[i,1] = ( data_in[i,3] - p_c )*(data_in[i,2]**(1/nu))   # x_i
         data[i,2] = data_in[i,1]*np.sqrt(data_in[i,2])              # d_i
     
@@ -64,13 +64,13 @@ def O(params,data_in=np.load("zoomed_crit_reg_data.npy")):
 ##############################
 # call fitter, generate data #
 ##############################
-res = minimize(O, np.array([1,1,1]), method='Powell',options={'disp': True, "maxiter": 1000}, bounds=((0,None),(0,None),(0,None)),tol=1e-20)
+res = minimize(O, np.array([1,1,1]), method='Powell',options={'disp': True, "maxiter": 1000}, bounds=((0,None),(0,None),(0,0)),tol=1e-20)
 p_c, nu, zeta = res.x
 
-data_in=np.load("zoomed_crit_reg_data.npy")
+data_in=np.load("data/zoomed_crit_reg_data.npy")
 data  = np.zeros((len(data_in),4), dtype=np.float64)
 for i in range(len(data_in)):
-    data[i,0] = (data_in[i,2]**(zeta/nu))*data_in[i,0]*data_in[i,2]   # y_i
+    data[i,0] = (data_in[i,2]**(zeta/nu))*data_in[i,0]#*data_in[i,2]   # y_i
     data[i,1] = ( data_in[i,3] - p_c )*(data_in[i,2]**(1/nu))         # x_i
     data[i,2] = data_in[i,1]                                          # d_i
     data[i,3] = data_in[i,2]                                          # L
@@ -95,7 +95,7 @@ for L in L_list:
 # plot data #
 #############
 pt = 0.0138889 
-fig, ax  = plt.subplots(figsize = (246*pt,150*pt))
+fig, ax  = plt.subplots(figsize = (246*pt,200*pt))
 
 plt.rcParams['axes.facecolor'] = 'white'
 fig.set_facecolor("white")
@@ -104,7 +104,7 @@ plt.rcParams['figure.dpi'] = 200
 plt.rcParams['savefig.dpi'] = 200
 
 for i in range(len(L_list)):
-    ax.scatter(data_2_plot[i][:,1],data_2_plot[i][:,0],label=r"$L=$"+str(L_list[i]),s=2)
+    ax.scatter(data_2_plot[i][:,1],data_2_plot[i][:,0],label=r"$L=$"+str(L_list[i]),s=3)
 
 # ax.set_yscale('log')
 ax.set_ylabel(r"$\mathcal{I}$")

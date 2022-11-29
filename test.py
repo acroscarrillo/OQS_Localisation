@@ -1,4 +1,5 @@
 from src import *
 
-print(delta(1,2))
-print(delta(2,2))
+
+data_in=np.load("data/zoomed_crit_reg_data.npy")
+print(data_in[0,0])
