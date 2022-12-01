@@ -3,7 +3,7 @@
 import sys
 import os
 sys.path.insert(
-    0, 
+    0,
     os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 )
 # The preceding code is only needed to run the script through the run
