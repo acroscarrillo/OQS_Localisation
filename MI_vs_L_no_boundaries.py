@@ -19,10 +19,10 @@ def MI_vs_L(L_array,run_array,p_array,V,lamb):
         MI_err_array = np.zeros(len(L_array))
         for L_ind, L in enumerate(L_array):
             realisations_array = np.zeros(run_array[L_ind])
+            subsys_A = np.arange(0,L//3,1)
+            subsys_B = np.arange(2*L//3,L,1)
             for k in range(run_array[L_ind]):
                 A_mat = A(L,p)
-                subsys_A = np.arange(0,L//3,1)
-                subsys_B = np.arange(2*L//3,L,1)
                 realisations_array[k] = L*MI_by_L_NESS(V,lamb,A_mat,subsys_A,subsys_B)
             MI_array[L_ind] = np.sum(realisations_array)/len(realisations_array)
             MI_err_array[L_ind] =stnd_err(realisations_array)
