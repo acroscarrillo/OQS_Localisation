@@ -1,3 +1,5 @@
+import os
+
 from numba import jit, njit, types, vectorize, prange
 import numpy as np
 from numpy import linalg as LA
@@ -295,7 +297,7 @@ def MI_plus_tot_entropy_NESS(H_mat,A_mat,subsys_A,subsys_B=np.array([12345])):  
 
 
 @njit(nogil=True, parallel=False)
-def O(params,data_in=np.load("data/zoomed_crit_reg_data.npy")):
+def O(params, data_in=None):
     """Calculates the value of the finite size scalling collapse cost function. 
 
     Calculates the cost function for a given critical point, exponent and zeta and fitting data.
@@ -312,6 +314,11 @@ def O(params,data_in=np.load("data/zoomed_crit_reg_data.npy")):
     """
     p_c, nu, zeta = params[0], params[1], params[2]
     
+    if data_in == None:
+        directory_name = os.path.dirname(__file__)
+        file_name = os.path.join(directory_name, "..", "data", "zoomed_crit_reg_data.npy")
+        data_in = np.load(file_name)
+
     # data_in structure MI|MI_ERR|L|p|L_A
     # data    structure y|x|d
     data  = np.zeros((len(data_in),3), dtype=np.float64)
