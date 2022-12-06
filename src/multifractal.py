@@ -95,7 +95,10 @@ def mass_exponent(
     width: int,
     length: int,
 ) -> float:
-    """Calculates the mass exponents of an array of moments element wise."""
+    """Calculates the mass exponents of an array of moments element wise.
+    
+    Vectorized, so may accept array arguments.
+    """
     return math.log(moment) / math.log(width/length)
 
 @vectorize
@@ -106,5 +109,7 @@ def generalized_fractal_dimension(
     length: int,
 ) -> float:
     """Calculates the generalized fractal dimensions of an array of moments element wise.
+    
+    Vectorized, so may accept array arguments.
     """
     return mass_exponent(moment, width, length) / (power - 1)
