@@ -12,15 +12,14 @@ plt.rcParams["font.family"] = "Times New Roman"
 ##############################
 # call fitter, generate data #
 ##############################
-res = minimize(O, np.array([1,1,1]), method='Powell',options={'disp': True, "maxiter": 1000}, bounds=((0.8,1.2),(0,5),(0,0)),tol=1e-20)
+res = minimize(O_alt, np.array([1,5,1]), method='Powell',options={'disp': True, "maxiter": 1000}, bounds=((0,None),(0,None),(0,0)),tol=1e-20)
 
-p_c, nu, zeta = 0.97,5.2,0# res.x
-# p_c, nu, zeta = res.x
+p_c, nu, C = res.x
 
 data_in=np.load("data/zoomed_crit_reg_data.npy")
 data  = np.zeros((len(data_in),4), dtype=np.float64)
 for i in range(len(data_in)):
-    data[i,0] = (data_in[i,2]**(zeta/nu))*data_in[i,0]                 # y_i
+    data[i,0] =  (data_in[i,0]-C)*(data_in[i,2]**(1/nu))/np.log(data_in[i,2])                 # y_i
     data[i,1] = ( data_in[i,3] - p_c )*(data_in[i,2]**(1/nu))          # x_i
     data[i,2] = data_in[i,1]                                           # d_i
     data[i,3] = data_in[i,2]                                           # L

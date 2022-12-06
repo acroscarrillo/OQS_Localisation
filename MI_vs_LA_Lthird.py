@@ -19,6 +19,7 @@ def MI_vs_LA(L,LA_steps,runs,p_array,V,lamb):
         MI_array = np.zeros(lenght)
         MI_err_array = np.zeros(lenght)
         for LA_ind, LA in enumerate(range(1,2*L//3+1,LA_steps)):
+            print(LA_ind/lenght)
             subsys_A = np.arange(0,LA,1)
             subsys_B = np.arange(LA+L//3,L,1)
             realisations_array = np.zeros(runs)
@@ -36,10 +37,10 @@ def MI_vs_LA(L,LA_steps,runs,p_array,V,lamb):
 # Plotting code #
 #################
 # parameter space
-L = 1000
-LA_steps = 10
-runs = 50
-p_array = np.array([0.1,0.6,0.97,1.6,4])
+L = 2000
+LA_steps = 75
+runs = 20
+p_array = np.array([0, 0.01, 0.1, 0.2, 0.6, 0.97, 1.6, 4])
 V, lamb = 0, 0
 
 plotting_data = MI_vs_LA(L,LA_steps,runs,p_array,V,lamb)
@@ -60,7 +61,7 @@ for data in plotting_data:
     # ax.errorbar(LA_array,MI_array,yerr=MI_err_array,label="p="+str(p),ms=2,marker="o",lw=1)
 
 
-# ax.set_yscale("log")
+ax.set_yscale("log")
 # ax.set_xscale("log")
 ax.set_ylabel(r"$\mathcal{I}$")
 ax.set_xlabel(r"$L_A$")

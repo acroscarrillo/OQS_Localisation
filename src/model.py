@@ -354,3 +354,65 @@ def O(params,data_in=np.load("data/zoomed_crit_reg_data.npy")):
         O_val += (y-y_bar)**2#/Delta_sqrd
     
     return O_val 
+
+
+@njit(nogil=True, parallel=False)
+def O_alt(params,data_in=np.load("data/zoomed_crit_reg_data.npy")):
+    """Calculates the value of the finite size scalling collapse cost function with alternative ansatz. 
+
+    Calculates the cost function for a given critical point, exponent and zeta and fitting data.
+
+    Args:
+        params: Tuple or array containing the critical point, critical exponent and zeta, in that order. 
+        data_in:  2D array of floats of structure Nx5 where each row has MI|MI_ERR|L|p|L_A.
+
+    Returns:
+        A single float for the cost.
+
+    Raises:
+        N/A.
+    """
+    p_c, nu, C = params[0], params[1], params[2]
+    
+    # data_in structure MI|MI_ERR|L|p|L_A
+    # data    structure y|x|d
+    data  = np.zeros((len(data_in),3), dtype=np.float64)
+    for i in range(len(data_in)):
+        data[i,0] = (data_in[i,0]-C)*(data_in[i,2]**(1/nu))/np.log(data_in[i,2])         # y_i
+        data[i,1] = ( data_in[i,3] - p_c )*(data_in[i,2]**(1/nu))   # x_i
+        data[i,2] = data_in[i,1]*np.sqrt(data_in[i,2])              # d_i
+    
+    data_sorted = data[data[:, 1].argsort()] # sort in ascending x_i
+
+    O_val = 0
+    for i in range(1,len(data_sorted)-1): # as each loop requires n.n.
+        y_m, y, y_p = data_sorted[i-1,0], data_sorted[i,0], data_sorted[i+1,0]
+        x_m, x, x_p = data_sorted[i-1,1], data_sorted[i,1], data_sorted[i+1,1]
+        d_m, d, d_p = data_sorted[i-1,2], data_sorted[i,2], data_sorted[i+1,2]
+        
+        ###################
+        #CAREFUL WITH THIS#   this just handles the p=p_c situation
+        ###################
+        try:
+            frac_p = (x_p-x)/(x_p-x_m)
+        except:
+            frac_p = 1/2
+        try:
+            frac_m = (x-x_m)/(x_p-x_m)
+        except: 
+            frac_p = 1/2
+        
+        if np.isnan(frac_p): 
+            frac_p = 1/2
+        
+        if np.isnan(frac_m): 
+            frac_m = 1/2
+        
+        ####################
+        
+        y_bar = y_m*frac_p + y_p*frac_m
+        Delta_sqrd = d**2 + (d_m*frac_p)**2 + (d_p*frac_m)**2
+                
+        O_val += (y-y_bar)**2#/Delta_sqrd
+    
+    return O_val 
