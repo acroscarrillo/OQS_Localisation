@@ -13,14 +13,14 @@ plt.rcParams["font.family"] = "Times New Roman"
 @njit(nogil=True, parallel=False)
 def MI_vs_LA(L,LA_steps,runs,p_array,V,lamb):
     plotting_data = []
-    lenght = len(range(1,2*L//3+1,LA_steps))
+    length = len(range(1,L,LA_steps))
     for p in p_array:
-        MI_array = np.zeros(lenght)
-        MI_err_array = np.zeros(lenght)
-        for LA_ind, LA in enumerate(range(1,2*L//3+1,LA_steps)):
-            print(LA_ind/lenght)
+        MI_array = np.zeros(length)
+        MI_err_array = np.zeros(length)
+        for LA_ind, LA in enumerate(range(1,L,LA_steps)):
+            print(LA_ind/length)
             subsys_A = np.arange(0,LA,1)
-            subsys_B = np.arange(LA+L//3,L,1)
+            subsys_B = np.arange(LA,L,1)
             realisations_array = np.zeros(runs)
             for k in range(runs):
                 A_mat = A(L,p)
@@ -28,7 +28,7 @@ def MI_vs_LA(L,LA_steps,runs,p_array,V,lamb):
             MI_array[LA_ind] = np.sum(realisations_array)/len(realisations_array)
             MI_err_array[LA_ind] =stnd_err(realisations_array)
         
-        LA_array = np.arange(1,2*L//3+1,LA_steps)
+        LA_array = np.arange(1,L,LA_steps)
         plotting_data.append(  (LA_array, MI_array, MI_err_array, p)  )
     return plotting_data
 
@@ -37,16 +37,16 @@ def MI_vs_LA(L,LA_steps,runs,p_array,V,lamb):
 #################
 # parameter space
 L = 1000
-LA_steps = 60
+LA_steps = 35
 runs = 20
 p_array = np.array([0, 0.01, 0.1, 0.2, 0.6, 0.97, 1.6, 4])
 V, lamb = 0, 0
 
-# plotting_data = MI_vs_LA(L,LA_steps,runs,p_array,V,lamb)
-# with open("data/MI_vs_LA_no_boundaries.ob", 'wb') as fp:
-#     pickle.dump(plotting_data, fp)
+plotting_data = MI_vs_LA(L,LA_steps,runs,p_array,V,lamb)
+with open("data/MI_vs_LA_with_boundaries.ob", 'wb') as fp:
+    pickle.dump(plotting_data, fp)
 
-with open ("data/MI_vs_LA_no_boundaries.ob", 'rb') as fp:
+with open ("data/MI_vs_LA_with_boundaries.ob", 'rb') as fp:
     plotting_data = pickle.load(fp)
 
 plt.rcParams['figure.dpi'] = 300
@@ -59,7 +59,7 @@ for data in plotting_data:
     ax.errorbar(LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1],yerr=MI_err_array[1:len(LA_array)//2+1],label="p="+str(p),ms=2,marker="o",lw=1)
     # ax.errorbar(LA_array,MI_array,yerr=MI_err_array,label="p="+str(p),ms=2,marker="o",lw=1)
 
-ax.set_yscale("log")
+# ax.set_yscale("log")
 # ax.set_xscale("log")
 ax.set_ylabel(r"$\mathcal{I}$")
 ax.set_xlabel(r"$L_A$")

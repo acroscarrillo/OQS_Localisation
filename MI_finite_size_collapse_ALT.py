@@ -12,7 +12,7 @@ plt.rcParams["font.family"] = "Times New Roman"
 ##############################
 # call fitter, generate data #
 ##############################
-res = minimize(O_alt, np.array([1,5,1]), method='Powell',options={'disp': True, "maxiter": 1000}, bounds=((0,None),(0,None),(0,0)),tol=1e-20)
+res = minimize(O_alt, np.array([1,1,1]), method='Powell',options={'disp': True, "maxiter": 1000}, bounds=((0,2),(0,2),(0,0)),tol=1e-20)
 
 p_c, nu, C = res.x
 
@@ -58,7 +58,7 @@ for i in range(len(L_list)):
 # ax.set_yscale('log')
 ax.set_ylabel(r"$\mathcal{I}$")
 ax.set_xlabel(r"$L^{1/\nu}(p-p_c)$")
-plt.title(r"$p_c=$"+str(p_c)+", "+r"$\nu=$"+str(nu),size=10)
+plt.title(r"$p_c=$"+str(p_c)+", "+r"$\nu=$"+str(nu)+", "+r"$C=$"+str(C),size=10)
 ax.legend(fontsize=8);
 plt.tight_layout()
 
