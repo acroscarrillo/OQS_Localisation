@@ -42,9 +42,9 @@ runs = 20
 p_array = np.array([0, 0.01, 0.1, 0.2, 0.6, 0.97, 1.6, 4])
 V, lamb = 0, 0
 
-plotting_data = MI_vs_LA(L,LA_steps,runs,p_array,V,lamb)
-with open("data/MI_vs_LA_with_boundaries.ob", 'wb') as fp:
-    pickle.dump(plotting_data, fp)
+# plotting_data = MI_vs_LA(L,LA_steps,runs,p_array,V,lamb)
+# with open("data/MI_vs_LA_with_boundaries.ob", 'wb') as fp:
+#     pickle.dump(plotting_data, fp)
 
 with open ("data/MI_vs_LA_with_boundaries.ob", 'rb') as fp:
     plotting_data = pickle.load(fp)

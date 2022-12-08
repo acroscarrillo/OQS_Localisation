@@ -25,6 +25,7 @@ def A_antidiag_vs_p(L,p_array,runs):
 L = 1000
 runs = 1000
 p_array = np.arange(0,2.4,0.4)
+p_array = np.array([0.0, 0.1, 0.4, 0.8, 1.2, 1.6, 2.0])
 
 # data_2_plot = A_antidiag_vs_p(L,p_array,runs)
 # with open("data/A_vs_d.ob", 'wb') as fp:
@@ -47,8 +48,11 @@ plt.rcParams['savefig.dpi'] = 600
 
 for data in data_2_plot:
     x, y, y_label = data
-    g = (np.log(y[-1])-np.log(y[-L//4]))/(np.log(x[-1])-np.log(x[-L//4]))
-    ax.plot(x,y,label="p="+str( np.round(y_label,2) )+", g log="+str(np.round(g,1)))
+    g, y_intercept = fit_log_log(x, y,subset=np.arange(50,L//2-1))
+    # g = (np.log(y[-1])-np.log(y[-L//4]))/(np.log(x[-1])-np.log(x[-L//4]))
+    
+    ax.scatter(x,y,label="p="+str( np.round(y_label,2) )+", g log="+str(np.round(g,2)),s=1)
+    ax.plot(np.arange(50,L//2-1), np.exp(y_intercept)*(np.arange(50,L//2-1)**g),lw=1,c="black")
 
 ax.set_ylabel(r'$\langle A_{L/2,L/2+d}\rangle$')
 ax.set_xlabel(r'$d$')

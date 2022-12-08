@@ -96,4 +96,3 @@ def cycle_table(r:int, c:int, t:tuple):
 
     return r, c
 
-cycle_table(1.0, 2, (3,4))
