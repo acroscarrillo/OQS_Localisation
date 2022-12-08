@@ -65,3 +65,33 @@ def center_arrays(arrs):
     for i, arr in enumerate(arrs):
         out[i, :] = center_array(arr)
     return out
+
+def cycle_table(r, c, t):
+    """ Method to handdle indicies for matplotlib subplots. That is, given a tuple
+    representing a table t, translate the rows r and columns c one step forward. 
+    Mathematically, r->r+1 if r<row_max otherwise r->0 and c->c+1. 
+    
+    Args:
+        r: row index, must be Int.
+        c: column index., must be Int.
+        t: table shape, a touple (t_1, t_2) where t_1 is the number of rows and t_2
+            is the number of columns.
+    
+    Returs:
+         r_new, c_new: new row and column indices.
+    
+    Raises:
+        ValueError: If r and c are already at the final position of table t as they
+            cant be further advanced.
+    """
+
+    if r+1 < t[0]:
+        r += 1
+    elif r+1 == t[0] and c+1< t[1]:
+        r = 0
+        c += 1
+    else:
+        raise ValueError( "Row index r="+str(r)+ " and column index c="+str(c)+", will exceed table of dimensions t="+str(t)+" if further advanced.")
+
+    return r, c
+
