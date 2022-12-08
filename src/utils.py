@@ -86,9 +86,9 @@ def cycle_table(r:int, c:int, t:tuple):
             shouldnt be further advanced.
     """
 
-    if r+1 < t[0]:
+    if r+1 < t[1]:
         r += 1
-    elif r+1 == t[0] and c+1< t[1]:
+    elif r+1 == t[1] and c+1< t[0]:
         r = 0
         c += 1
     else:
