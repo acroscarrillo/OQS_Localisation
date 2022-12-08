@@ -20,14 +20,16 @@ with open ("data/MI_vs_p_no_boundaries.ob", 'rb') as fp:
     mi_vs_p_n_b = pickle.load(fp), "MI vs p no boundaries", "MI", "p"
 with open ("data/MI_vs_LA_with_boundaries.ob", 'rb') as fp:
     mi_vs_LA_w_b = pickle.load(fp), "MI vs L_A with boundaries", "MI", "L_A"
+with open ("data/MI_vs_L_with_boundaries.ob", 'rb') as fp:
+    mi_vs_L_w_b = pickle.load(fp), "MI vs L with boundaries", "MI", "L"
 
-data2plot = [mi_vs_L_n_b, mi_vs_LA_n_b, mi_vs_p_n_b, mi_vs_LA_w_b]
+data2plot = [mi_vs_L_n_b, mi_vs_LA_n_b, mi_vs_p_n_b, mi_vs_L_w_b, mi_vs_LA_w_b]
 
 #############
 # plot data #
 #############
 pt = 0.0138889 
-t = (4,4)
+t = (5,4)
 fig, ax  = plt.subplots(ncols=t[0],nrows=t[1], figsize = (246*pt,200*pt),constrained_layout=True)
 
 plt.rcParams['axes.facecolor'] = 'white'

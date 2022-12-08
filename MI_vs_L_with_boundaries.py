@@ -41,9 +41,9 @@ p_array = np.array([0.6,0.9,1,1.13,1.6])
 # p_array = np.array([0,0.01,0.1,0.2])
 V, lamb = 0, 0
 
-plotting_data = MI_vs_L(L_array,run_array,p_array,V,lamb)
-with open("data/MI_vs_L_with_boundaries.ob", 'wb') as fp:
-    pickle.dump(plotting_data, fp)
+# plotting_data = MI_vs_L(L_array,run_array,p_array,V,lamb)
+# with open("data/MI_vs_L_with_boundaries.ob", 'wb') as fp:
+#     pickle.dump(plotting_data, fp)
 
 with open ("data/MI_vs_L_with_boundaries.ob", 'rb') as fp:
     plotting_data = pickle.load(fp)
