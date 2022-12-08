@@ -3,6 +3,7 @@
 import numpy as np
 import scipy.stats as stats
 from numba import njit
+import warnings
 
 def preallocated_collect(storage, iterable):
     """Stores each element of an iterable object to a preallocated indexable object.
@@ -66,7 +67,7 @@ def center_arrays(arrs):
         out[i, :] = center_array(arr)
     return out
 
-def cycle_table(r, c, t):
+def cycle_table(r:int, c:int, t:tuple):
     """ Method to handdle indicies for matplotlib subplots. That is, given a tuple
     representing a table t, translate the rows r and columns c one step forward. 
     Mathematically, r->r+1 if r<row_max otherwise r->0 and c->c+1. 
@@ -81,8 +82,8 @@ def cycle_table(r, c, t):
          r_new, c_new: new row and column indices.
     
     Raises:
-        ValueError: If r and c are already at the final position of table t as they
-            cant be further advanced.
+        Warning: If r and c are already at the final position of table t as they
+            shouldnt be further advanced.
     """
 
     if r+1 < t[0]:
@@ -91,7 +92,8 @@ def cycle_table(r, c, t):
         r = 0
         c += 1
     else:
-        raise ValueError( "Row index r="+str(r)+ " and column index c="+str(c)+", will exceed table of dimensions t="+str(t)+" if further advanced.")
+        warnings.warn( "Row index r="+str(r)+ " and column index c="+str(c)+", will exceed table of dimensions t="+str(t)+" if further advanced.")
 
     return r, c
 
+cycle_table(1.0, 2, (3,4))
