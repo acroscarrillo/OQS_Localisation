@@ -21,9 +21,8 @@ def MI_vs_p(L_array,run_array,p_array,V,lamb):
             realisations_array = np.zeros(run_array[L_ind])
             for k in range(run_array[L_ind]):
                 A_mat = A(L,p)
-                subsys_A = np.arange(0,L//3,1)
-                subsys_B = np.arange(2*L//3,L,1)
-                realisations_array[k] = L*MI_by_L_NESS(V,lamb,A_mat,subsys_A,subsys_B)
+                subsys_A = np.arange(0,L//2,1)
+                realisations_array[k] = L*MI_by_L_NESS(V,lamb,A_mat,subsys_A)
             MI_array[p_ind] = np.sum(realisations_array)/len(realisations_array)
             MI_err_array[p_ind] = stnd_err(realisations_array)
         plotting_data.append(  (p_array, MI_array, MI_err_array, L)  )
@@ -43,11 +42,11 @@ run_array = np.array([500,200,200,200,100])
 p_array = np.arange(0.9,1.1,0.005)
 V, lamb = 0, 0
 
-# plotting_data = MI_vs_p(L_array,run_array,p_array,V,lamb)
-# with open("data/MI_vs_p_no_boundaries.ob", 'wb') as fp:
-#     pickle.dump(plotting_data, fp)
+plotting_data = MI_vs_p(L_array,run_array,p_array,V,lamb)
+with open("data/MI_vs_p_with_boundaries.ob", 'wb') as fp:
+    pickle.dump(plotting_data, fp)
 
-with open ("data/MI_vs_p_no_boundaries.ob", 'rb') as fp:
+with open ("data/MI_vs_p_with_boundaries.ob", 'rb') as fp:
     plotting_data = pickle.load(fp)
 
 plt.rcParams['figure.dpi'] = 300
