@@ -2,7 +2,7 @@
 # which contains some main packages (numpy, numba,..)
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join('..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src import *
 from tqdm import tqdm
 import pickle #to save python objects
