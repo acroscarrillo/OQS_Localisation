@@ -1,5 +1,8 @@
 # import model.py methods (A, C, MI, ...) 
 # which contains some main packages (numpy, numba,..)
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join('..')))
 from src import *
 import pickle #to save python objects
 from scipy.optimize import curve_fit, minimize #to do the fitting
@@ -12,14 +15,15 @@ plt.rcParams["font.family"] = "Times New Roman"
 ##############################
 # call fitter, generate data #
 ##############################
-res = minimize(O_alt, np.array([1,1,1]), method='Powell',options={'disp': True, "maxiter": 1000}, bounds=((0,2),(0,2),(0,0)),tol=1e-20)
+res = minimize(O, np.array([1,1,1]), method='Powell',options={'disp': True, "maxiter": 1000}, bounds=((0.8,1.2),(0,5),(0,0)),tol=1e-20)
 
-p_c, nu, C = res.x
+p_c, nu, zeta = 0.97,5.2,0# res.x
+# p_c, nu, zeta = res.x
 
 data_in=np.load("data/zoomed_crit_reg_data.npy")
 data  = np.zeros((len(data_in),4), dtype=np.float64)
 for i in range(len(data_in)):
-    data[i,0] =  (data_in[i,0]-C)*(data_in[i,2]**(1/nu))/np.log(data_in[i,2])                 # y_i
+    data[i,0] = (data_in[i,2]**(zeta/nu))*data_in[i,0]                 # y_i
     data[i,1] = ( data_in[i,3] - p_c )*(data_in[i,2]**(1/nu))          # x_i
     data[i,2] = data_in[i,1]                                           # d_i
     data[i,3] = data_in[i,2]                                           # L
@@ -58,7 +62,7 @@ for i in range(len(L_list)):
 # ax.set_yscale('log')
 ax.set_ylabel(r"$\mathcal{I}$")
 ax.set_xlabel(r"$L^{1/\nu}(p-p_c)$")
-plt.title(r"$p_c=$"+str(p_c)+", "+r"$\nu=$"+str(nu)+", "+r"$C=$"+str(C),size=10)
+plt.title(r"$p_c=$"+str(p_c)+", "+r"$\nu=$"+str(nu),size=10)
 ax.legend(fontsize=8);
 plt.tight_layout()
 

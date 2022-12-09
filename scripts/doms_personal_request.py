@@ -1,5 +1,8 @@
 # import model.py methods (A, C, MI, ...) 
 # which contains some main packages (numpy, numba,..)
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join('..')))
 from src import *
 import pickle #to save python objects
 from scipy.optimize import curve_fit, minimize #to do the fitting
