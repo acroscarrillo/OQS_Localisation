@@ -17,8 +17,10 @@ plt.rcParams["font.family"] = "Times New Roman"
 ##############################
 res = minimize(O, np.array([1,1,1]), method='Powell',options={'disp': True, "maxiter": 1000}, bounds=((0.8,1.2),(0,5),(0,0)),tol=1e-20)
 
-p_c, nu, zeta = 0.97,5.2,0# res.x
-# p_c, nu, zeta = res.x
+# p_c, nu, zeta = 0.97,5.2,0# res.x
+p_c, nu, zeta = res.x
+
+print(p_c,nu,zeta)
 
 data_in=np.load("data/zoomed_crit_reg_data.npy")
 data  = np.zeros((len(data_in),4), dtype=np.float64)
@@ -42,6 +44,12 @@ for L in L_list:
             aux_array[counter,2] = d[2]
             counter += 1
     data_2_plot.append(aux_array)
+
+with open("data/collapse_data.ob", 'wb') as fp:
+    pickle.dump(data_2_plot, fp)
+
+with open ("data/collapse_data.ob", 'rb') as fp:
+    data_2_plot = pickle.load(fp)
 
 
 #############

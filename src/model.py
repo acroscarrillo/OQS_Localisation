@@ -296,7 +296,7 @@ def MI_plus_tot_entropy_NESS(H_mat,A_mat,subsys_A,subsys_B=np.array([12345])):  
 
 
 
-@njit(nogil=True, parallel=False)
+# @njit(nogil=True, parallel=False)
 def O(params, data_in=None):
     """Calculates the value of the finite size scalling collapse cost function. 
 
