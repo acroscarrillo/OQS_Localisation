@@ -364,7 +364,7 @@ def O(params, data_in=None):
 
 
 @njit(nogil=True, parallel=False)
-def O_alt(params,data_in=np.load("data/zoomed_crit_reg_data.npy")):
+def O_alt(params,data_in=None):
     """Calculates the value of the finite size scalling collapse cost function with alternative ansatz. 
 
     Calculates the cost function for a given critical point, exponent and zeta and fitting data.
@@ -381,6 +381,11 @@ def O_alt(params,data_in=np.load("data/zoomed_crit_reg_data.npy")):
     """
     p_c, nu, C = params[0], params[1], params[2]
     
+    if data_in == None:
+        directory_name = os.path.dirname(__file__)
+        file_name = os.path.join(directory_name, "..", "data", "zoomed_crit_reg_data.npy")
+        data_in = np.load(file_name)
+
     # data_in structure MI|MI_ERR|L|p|L_A
     # data    structure y|x|d
     data  = np.zeros((len(data_in),3), dtype=np.float64)
