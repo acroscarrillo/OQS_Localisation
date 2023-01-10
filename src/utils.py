@@ -54,14 +54,20 @@ def fit_log_log(x, y, subset=None):
 
 @njit
 def center_array(arr):
-    """Translates an array to centre its values on the largest element."""
+    """Translates an array to centre its values on the largest element.
+    
+    Assumes periodic boundaries.
+    """
     central_index = len(arr) // 2
     centre = np.argmax(arr)
     return np.roll(arr, central_index-centre)
 
 @njit
 def center_arrays(arrs):
-    """Translates each array to centre their values on the largest element."""
+    """Translates each array to centre their values on the largest element.
+    
+    Assumes periodic boundaries.
+    """
     out = np.full_like(arrs, 0.0)
     for i, arr in enumerate(arrs):
         out[i, :] = center_array(arr)
