@@ -22,14 +22,14 @@ plt.rc('legend', fontsize=5)    # legend fontsize
 ###############
 # import data #
 ###############
-with open ("data/MI_vs_L_no_boundaries.ob", 'rb') as fp:
-    MI_vs_L_n_b = pickle.load(fp)
-with open ("data/MI_vs_LA_no_boundaries.ob", 'rb') as fp:
-    MI_vs_LA_n_b = pickle.load(fp)
-with open ("data/MI_vs_p_no_boundaries.ob", 'rb') as fp:
-    MI_vs_p_n_b = pickle.load(fp)
-with open ("data/collapse_data.ob", 'rb') as fp:
-    collapse_data = pickle.load(fp)
+with open ("data/MI_vs_L_with_boundaries.ob", 'rb') as fp:
+    MI_vs_L_w_b = pickle.load(fp)
+with open ("data/MI_vs_LA_with_boundaries.ob", 'rb') as fp:
+    MI_vs_LA_w_b = pickle.load(fp)
+# with open ("data/MI_vs_p_with_boundaries.ob", 'rb') as fp:
+#     MI_vs_p_w_b = pickle.load(fp)
+# with open ("data/collapse_data_with_boundaries.ob", 'rb') as fp:
+#     collapse_data = pickle.load(fp)
 #############
 # plot data #
 #############
@@ -47,7 +47,7 @@ ax3_inset = fig.add_axes([left, bottom, width, height])
 color_ls = ["C0","C1","C2","C3","C4","C5","C6","C7","C8","C9"]
 
 # MI vs L
-for i, data in enumerate(MI_vs_L_n_b):
+for i, data in enumerate(MI_vs_L_w_b):
     L_array, MI_array, MI_err_array, p = data
     if np.round(p,2) !=4.0: 
         g, y_intercept = fit_log_log( L_array, MI_array )
@@ -61,7 +61,7 @@ ax1.set_ylabel(r"$\mathcal{I}$")
 ax1.set_xlabel(r"$L$")
 
 # MI vs L_A
-for i, data in enumerate(MI_vs_LA_n_b):
+for i, data in enumerate(MI_vs_LA_w_b):
     LA_array, MI_array, MI_err_array, p = data
     if np.round(p,2) !=4.0: 
         ax2.errorbar(LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1],yerr=MI_err_array[1:len(LA_array)//2+1],label="p="+str(p),ms=0.6,marker="o",lw=0.6,color=color_ls[i])
@@ -72,26 +72,26 @@ ax2.set_ylabel(r"$\mathcal{I}$")
 ax2.set_xlabel(r"$L_A$")
 
 # MI vs p
-for data in MI_vs_p_n_b:
-    p_array, MI_array, MI_err_array, L = data
-    ax3.errorbar(p_array,MI_array,yerr=MI_err_array,label="L="+str(L),ms=0.6,marker="o",lw=0.6)
+# for data in MI_vs_p_w_b:
+#     p_array, MI_array, MI_err_array, L = data
+#     ax3.errorbar(p_array,MI_array,yerr=MI_err_array,label="L="+str(L),ms=0.6,marker="o",lw=0.6)
     
-ax3.set_ylabel(r"$\mathcal{I}$")
-ax3.set_xlabel(r"$p$")
-ax3.legend(fontsize=4,loc="lower left")
+# ax3.set_ylabel(r"$\mathcal{I}$")
+# ax3.set_xlabel(r"$p$")
+# ax3.legend(fontsize=4,loc="lower left")
 
-# Collapse inset
-L_list = [400,800,1200,1600,2000]
-for i in range(len(L_list)):
-    ax3_inset.scatter(collapse_data[i][:,1],collapse_data[i][:,0],s=0.6,marker=".")#label=r"$L=$"+str(L_list[i]),s=3)
+# # Collapse inset
+# L_list = [400,800,1200,1600,2000]
+# for i in range(len(L_list)):
+#     ax3_inset.scatter(collapse_data[i][:,1],collapse_data[i][:,0],s=0.6,marker=".")#label=r"$L=$"+str(L_list[i]),s=3)
 
-# ax.set_yscale('log')
-ax3_inset.set_ylabel(r"$\mathcal{I}$",fontsize=5,rotation=180)
-ax3_inset.set_xlabel(r"$L^{1/\nu}(p-p_c)$",fontsize=4)
-ax3_inset.set_xticks([])
-ax3_inset.set_yticks([])
-ax3_inset.xaxis.set_label_coords(0.5, -0.05)
-ax3_inset.yaxis.set_label_coords(-0.075,0.6)
+# # ax.set_yscale('log')
+# ax3_inset.set_ylabel(r"$\mathcal{I}$",fontsize=4)
+# ax3_inset.set_xlabel(r"$L^{1/\nu}(p-p_c)$",fontsize=4)
+# ax3_inset.set_xticks([])
+# ax3_inset.set_yticks([])
+# ax3_inset.xaxis.set_label_coords(0.5, -0.05)
+# ax3_inset.yaxis.set_label_coords(-0.05,0.5)
 
 
 # send it!

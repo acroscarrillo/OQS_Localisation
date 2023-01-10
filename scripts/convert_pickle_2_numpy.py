@@ -2,7 +2,7 @@ import numpy as np
 import pickle #to save python objects
 
 
-with open ("data/MI_vs_p_no_boundaries.ob", 'rb') as fp:
+with open ("data/MI_vs_p_with_boundaries_9to11range.ob", 'rb') as fp:
     data = pickle.load(fp)
 
 data2save = np.array([0,0,0,0,0])
@@ -19,8 +19,8 @@ for d in data:
 
 data2save = np.delete(data2save,(0),axis=0)
 
-with open("data/zoomed_crit_reg_data.ob", 'wb') as fp:
-    pickle.dump(data2save, fp)
+# with open("data/zoomed_crit_reg_data.ob", 'wb') as fp:
+#     pickle.dump(data2save, fp)
 
-with open('data/zoomed_crit_reg_data.npy', 'wb') as f:
+with open('data/MI_vs_p_with_boundaries_9to11range.npy', 'wb') as f:
     np.save(f, data2save)
