@@ -316,7 +316,7 @@ def O_n_b(params, data_in=None):
     
     if data_in == None:
         directory_name = os.path.dirname(__file__)
-        file_name = os.path.join(directory_name, "..", "data", "zoomed_crit_reg_data_n_b.npy")
+        file_name = os.path.join(directory_name, "..", "data", "MI_vs_p_with_boundaries_1to13range.npy")
         data_in = np.load(file_name)
 
     # data_in structure MI|MI_ERR|L|p|L_A
@@ -381,7 +381,7 @@ def O_w_b_alt(params, data_in=None):
     
     if data_in == None:
         directory_name = os.path.dirname(__file__)
-        file_name = os.path.join(directory_name, "..", "data", "MI_vs_p_with_boundaries_9to11range.npy")
+        file_name = os.path.join(directory_name, "..", "data", "MI_vs_p_with_boundaries_1to13range.npy")
         data_in = np.load(file_name)
 
     # data_in structure MI|MI_ERR|L|p|L_A
@@ -391,7 +391,7 @@ def O_w_b_alt(params, data_in=None):
         data[i,0] = (data_in[i,2]**(zeta/nu))*data_in[i,0]/np.log(data_in[i,2])          # y_i
         data[i,1] = ( data_in[i,3] - p_c )*(data_in[i,2]**(1/nu))   # x_i
         data[i,2] = data_in[i,1]*np.sqrt(data_in[i,2])              # d_i
-    
+     
     data_sorted = data[data[:, 1].argsort()] # sort in ascending x_i
 
     O_val = 0
@@ -428,7 +428,7 @@ def O_w_b_alt(params, data_in=None):
     return O_val 
 
 @njit(nogil=True, parallel=False)
-def O_alt(params,data_in=np.load("data/zoomed_crit_reg_data_n_b.npy")):
+def O_alt(params,data_in=None):
     """Calculates the value of the finite size scalling collapse cost function with alternative ansatz. 
 
     Calculates the cost function for a given critical point, exponent and zeta and fitting data.
@@ -445,6 +445,11 @@ def O_alt(params,data_in=np.load("data/zoomed_crit_reg_data_n_b.npy")):
     """
     p_c, nu, C = params[0], params[1], params[2]
     
+    if data_in == None:
+        directory_name = os.path.dirname(__file__)
+        file_name = os.path.join(directory_name, "..", "data", "zoomed_crit_reg_data.npy")
+        data_in = np.load(file_name)
+
     # data_in structure MI|MI_ERR|L|p|L_A
     # data    structure y|x|d
     data  = np.zeros((len(data_in),3), dtype=np.float64)

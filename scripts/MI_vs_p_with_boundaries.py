@@ -41,15 +41,17 @@ def MI_vs_p(L_array,run_array,p_array,V,lamb):
 # L_array = np.array([10,20,30])
 # run_array= np.array([300,200,100])
 L_array = np.array([400,800,1200,1600,2000])
-run_array = np.array([500,200,200,200,100])
-p_array = np.arange(0.9,1.1,0.005)
+run_array = np.array([1000,400,400,400,200])
+# p_array = np.arange(1.1+0.005,1.2+0.005,0.005)
+p_array = np.arange(1,1.3,0.01)
 V, lamb = 0, 0
 
-# plotting_data = MI_vs_p(L_array,run_array,p_array,V,lamb)
-# with open("data/MI_vs_p_with_boundaries.ob", 'wb') as fp:
-#     pickle.dump(plotting_data, fp)
+plotting_data = MI_vs_p(L_array,run_array,p_array,V,lamb)
+with open("data/MI_vs_p_with_boundaries_1to13range.ob", 'wb') as fp:
+    pickle.dump(plotting_data, fp)
 
-with open ("data/MI_vs_p_with_boundaries_9to11range.ob", 'rb') as fp:
+
+with open ("data/MI_vs_p_with_boundaries_1to13range.ob", 'rb') as fp:
     plotting_data = pickle.load(fp)
 
 plt.rcParams['figure.dpi'] = 300
@@ -58,7 +60,7 @@ pt = 0.0138889
 fig, ax  = plt.subplots(1,1,figsize = (246*pt,150*pt))
 for data in plotting_data:
     p_array, MI_array, MI_err_array, L = data
-    ax.errorbar(p_array,MI_array/np.log(L),yerr=MI_err_array,label="L="+str(L),ms=1.5,marker="o",lw=1)
+    ax.errorbar(p_array,MI_array,yerr=MI_err_array,label="L="+str(L),ms=.5,marker="o",lw=.5)
     
 
 # ax.set_yscale("log")
