@@ -83,9 +83,9 @@ df[df["p"]==4].plot(kind='scatter', x='L', y='lamb', color='b',ax=ax,s=0.1,marke
 ################
 plotting_mean_df = df.groupby(['L',"p"], as_index=False)['lamb'].mean()
 
-plotting_mean_df[plotting_mean_df["p"]==0.4].plot(kind='line', x='L', y='lamb', color='yellow',label=r"$p=0.4$",lw=0.5,ax=ax)    
-plotting_mean_df[plotting_mean_df["p"]==0.97].plot(kind='line', x='L', y='lamb', color='magenta', label=r"$p=1.13$",lw=0.5,ax=ax)  
-plotting_mean_df[plotting_mean_df["p"]==4].plot(kind='line', x='L', y='lamb', color='white', label=r"$p=4$",lw=0.5,ax=ax)  
+plotting_mean_df[plotting_mean_df["p"]==0.4].plot(kind='line', x='L', y='lamb', color='yellow',label=r"$p=0.4$",lw=1,ax=ax)    
+plotting_mean_df[plotting_mean_df["p"]==0.97].plot(kind='line', x='L', y='lamb', color='magenta', label=r"$p=1.13$",lw=0.7,ax=ax)  
+plotting_mean_df[plotting_mean_df["p"]==4].plot(kind='line', x='L', y='lamb', color='white', label=r"$p=4$",lw=0.7,ax=ax)  
 
 ################
 # plotting_std_df = df.groupby(['L',"p"], as_index=False)['lamb'].std()

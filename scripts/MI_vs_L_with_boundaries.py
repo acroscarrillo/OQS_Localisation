@@ -21,6 +21,7 @@ def MI_vs_L(L_array,run_array,p_array,V,lamb):
         MI_array = np.zeros(len(L_array))
         MI_err_array = np.zeros(len(L_array))
         for L_ind, L in enumerate(L_array):
+            print(L_ind/len(L_array))
             realisations_array = np.zeros(run_array[L_ind])
             subsys_A = np.arange(0,L//2,1)
             for k in range(run_array[L_ind]):
@@ -40,7 +41,7 @@ L_array = np.arange(100,1000,100)
 run_array = np.arange(500,50,-50)
 # L_array = np.array([400,800,1200,1600,2000])
 # run_array = np.array([500,100,50,50,10])
-p_array = np.array([0.6,0.9,1,1.13,1.6])
+p_array = np.array([0, 0.01, 0.1, 0.2, 0.6, 0.97, 1.13, 1.6])
 # p_array = np.array([0,0.01,0.1,0.2])
 V, lamb = 0, 0
 
@@ -63,8 +64,8 @@ for data in plotting_data:
     ax.errorbar(L_array,MI_array,yerr=MI_err_array,label="p="+str(p),ms=2,marker="o",lw=1)
     
 
-# ax.set_yscale("log")
-# ax.set_xscale("log")
+ax.set_yscale("log")
+ax.set_xscale("log")
 ax.set_ylabel(r"$\mathcal{I}$")
 ax.set_xlabel(r"$L$")
 plt.legend(fontsize=5,loc="lower right")

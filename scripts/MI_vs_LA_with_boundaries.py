@@ -42,7 +42,7 @@ def MI_vs_LA(L,LA_steps,runs,p_array,V,lamb):
 L = 1000
 LA_steps = 35
 runs = 20
-p_array = np.array([0, 0.01, 0.1, 0.2, 0.6, 0.97, 1.6, 4])
+p_array = np.array([0, 0.01, 0.1, 0.2, 0.6, 0.97, 1.13, 1.6])
 V, lamb = 0, 0
 
 # plotting_data = MI_vs_LA(L,LA_steps,runs,p_array,V,lamb)
@@ -63,7 +63,7 @@ for data in plotting_data:
     # ax.errorbar(LA_array,MI_array,yerr=MI_err_array,label="p="+str(p),ms=2,marker="o",lw=1)
 
 # ax.set_yscale("log")
-# ax.set_xscale("log")
+ax.set_xscale("log")
 ax.set_ylabel(r"$\mathcal{I}$")
 ax.set_xlabel(r"$L_A$")
 plt.legend(fontsize=6,loc="upper left")

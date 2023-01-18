@@ -57,7 +57,7 @@ for data in data_2_plot:
     ax.scatter(x,y,label="p="+str( np.round(y_label,2) )+", g log="+str(np.round(g,2)),s=1)
     ax.plot(np.arange(50,L//2-1), np.exp(y_intercept)*(np.arange(50,L//2-1)**g),lw=1,c="black")
 
-ax.set_ylabel(r'$\langle A_{L/2,L/2+d}\rangle$')
+ax.set_ylabel(r'$\langle \Gamma_{L/2,L/2+d}\rangle$')
 ax.set_xlabel(r'$d$')
 
 ax.legend(fontsize=7)

@@ -49,10 +49,9 @@ color_ls = ["C0","C1","C2","C3","C4","C5","C6","C7","C8","C9"]
 # MI vs L
 for i, data in enumerate(MI_vs_L_w_b):
     L_array, MI_array, MI_err_array, p = data
-    if np.round(p,2) !=4.0: 
-        g, y_intercept = fit_log_log( L_array, MI_array )
-        ax1.plot(L_array, np.exp(y_intercept)*(L_array**g),lw=0.6,c="black")
-        ax1.errorbar(L_array,MI_array,yerr=MI_err_array,label=r'$\Delta$'+"="+str(np.round(g,2)),ms=0.6,marker="o",lw=0.6,color=color_ls[i])
+    g, y_intercept = fit_log_log( L_array, MI_array )
+    ax1.plot(L_array, np.exp(y_intercept)*(L_array**g),lw=0.6,c="black")
+    ax1.errorbar(L_array,MI_array,yerr=MI_err_array,label=r'$\Delta$'+"="+str(np.round(g,2)),ms=0.6,marker="o",lw=0.6,color=color_ls[i])
 
 ax1.legend(fontsize=4,loc="lower right")
 ax1.set_yscale("log")
@@ -70,6 +69,7 @@ ax2.legend(fontsize=4,loc="upper left")
 ax2.set_xscale("log")
 ax2.set_ylabel(r"$\mathcal{I}$")
 ax2.set_xlabel(r"$L_A$")
+
 
 # MI vs p
 for data in MI_vs_p_w_b:
