@@ -58,12 +58,13 @@ pt = 0.0138889
 fig, ax  = plt.subplots(1,1,figsize = (246*pt,150*pt))
 for data in plotting_data:
     LA_array, MI_array, MI_err_array, p = data
-    # gradient =  np.round((np.log(MI_array[-1])- np.log(MI_array[0]))/(np.log(LA_array[-1])-np.log(LA_array[0])),2)
-    ax.errorbar(LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1],yerr=MI_err_array[1:len(LA_array)//2+1],label="p="+str(p),ms=2,marker="o",lw=1)
-    # ax.errorbar(LA_array,MI_array,yerr=MI_err_array,label="p="+str(p),ms=2,marker="o",lw=1)
+    if np.round(p,2) !=4.0: 
+        # gradient =  np.round((np.log(MI_array[-1])- np.log(MI_array[0]))/(np.log(LA_array[-1])-np.log(LA_array[0])),2)
+        ax.errorbar(LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1],yerr=MI_err_array[1:len(LA_array)//2+1],label="p="+str(p),ms=2,marker="o",lw=1)
+        # ax.errorbar(LA_array,MI_array,yerr=MI_err_array,label="p="+str(p),ms=2,marker="o",lw=1)
 
-ax.set_yscale("log")
-# ax.set_xscale("log")
+# ax.set_yscale("log")
+ax.set_xscale("log")
 ax.set_ylabel(r"$\mathcal{I}$")
 ax.set_xlabel(r"$L_A$")
 plt.legend(fontsize=6,loc="upper left")
