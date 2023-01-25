@@ -71,7 +71,7 @@ for i, data in enumerate(MI_vs_LA_n_b):
     LA_array, MI_array, MI_err_array, p = data
     if np.round(p,2) !=4.0: 
         g, y_intercept = fit_log_log( LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1] )
-        ax2.plot(LA_array[1:len(LA_array)//2+1], np.exp(y_intercept)*(LA_array[1:len(LA_array)//2+1]**g),lw=0.6,c=color_ls[i],ls="dashed",label="p="+str(round(p,2))+" g="+str(round(g,2)))
+        ax2.plot(LA_array[1:len(LA_array)//2+1], np.exp(y_intercept)*(LA_array[1:len(LA_array)//2+1]**g),lw=0.6,c=color_ls[i],ls="dashed",label="p="+str(round(p,2))+" g="+str(round(g,1)))
         ax2.errorbar(LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1],fmt=".",yerr=MI_err_array[1:len(LA_array)//2+1],c=color_ls[i],alpha=0.4,ms=0.8,marker="o",lw=1)
 
 ax2.legend(fontsize=4,loc="lower left",framealpha=0.5)

@@ -39,11 +39,11 @@ def MI_vs_LA(L,LA_steps,runs,p_array,V,lamb):
 # Plotting code #
 #################
 # parameter space
-L = 2000
+L = 1000
 LA_steps = 20
 runs = 100
 # p_array = np.array([0, 0.01, 0.1, 0.2, 0.6, 0.97, 1.6, 4])
-p_array =  np.array([0.1])
+p_array =  np.array([3])
 V, lamb = 0, 0
 
 plotting_data = MI_vs_LA(L,LA_steps,runs,p_array,V,lamb)
@@ -65,7 +65,6 @@ for i, data in enumerate(plotting_data):
         g, y_intercept = fit_log_log( LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1] )
         ax.plot(LA_array[1:len(LA_array)//2+1], np.exp(y_intercept)*(LA_array[1:len(LA_array)//2+1]**g),lw=0.6,c=color_ls[i],ls="dashed")
         ax.errorbar(LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1],yerr=MI_err_array[1:len(LA_array)//2+1],c=color_ls[i],label="p="+str(round(p,2))+" g="+str(round(g,2)),ms=1,marker="o",lw=1)
-        # ax.errorbar(LA_array,MI_array,yerr=MI_err_array,label="p="+str(p),ms=2,marker="o",lw=1)
 
 ax.set_yscale("log")
 ax.set_xscale("log")
