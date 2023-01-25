@@ -54,9 +54,9 @@ for i, data in enumerate(MI_vs_L_n_b):
     if np.round(p,2) !=4.0: 
         g, y_intercept = fit_log_log( L_array, MI_array )
         ax1.plot(L_array, np.exp(y_intercept)*(L_array**g),lw=0.6,c=color_ls[i],ls="dashed")
-        ax1.errorbar(L_array,MI_array,yerr=MI_err_array,label=r'$\Delta$'+"="+str(np.round(g,2)),ms=1,marker="o", fmt=".",lw=0.6,color=color_ls[i])
+        ax1.errorbar(L_array,MI_array,yerr=MI_err_array,label=r'$\Delta$'+"="+str(np.round(g,2)),ms=0.8,marker="o", fmt=".",lw=0.6,color=color_ls[i])
 
-ax1.legend(fontsize=4,loc="lower right")
+ax1.legend(fontsize=4,loc="lower right",framealpha=0.5)
 ax1.set_yscale("log")
 ax1.set_xscale("log")
 ax1.set_ylabel(r"$\mathcal{I}$",rotation=180)
@@ -70,15 +70,19 @@ ax1.set_xlabel(r"$L$")
 for i, data in enumerate(MI_vs_LA_n_b):
     LA_array, MI_array, MI_err_array, p = data
     if np.round(p,2) !=4.0: 
-        ax2.errorbar(LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1],yerr=MI_err_array[1:len(LA_array)//2+1],label="p="+str(p),ls="dashed",ms=0.6,marker="o",lw=0.6,color=color_ls[i])
+        g, y_intercept = fit_log_log( LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1] )
+        ax2.plot(LA_array[1:len(LA_array)//2+1], np.exp(y_intercept)*(LA_array[1:len(LA_array)//2+1]**g),lw=0.6,c=color_ls[i],ls="dashed",label="p="+str(round(p,2))+" g="+str(round(g,2)))
+        ax2.errorbar(LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1],fmt=".",yerr=MI_err_array[1:len(LA_array)//2+1],c=color_ls[i],alpha=0.4,ms=0.8,marker="o",lw=1)
 
-ax2.legend(fontsize=4,loc="lower right")
+ax2.legend(fontsize=4,loc="lower left",framealpha=0.5)
 ax2.set_xscale("log")
+ax2.set_yscale("log")
 ax2.set_ylabel(r"$\mathcal{I}$",rotation=180)
 ax2.set_xlabel(r"$L_A$")
-ax2.set_yticks([20,0])
 ax2.xaxis.set_minor_formatter(NullFormatter())
-ax2.set_xticks([60.0,300.0])
+ax2.yaxis.set_minor_formatter(NullFormatter())
+ax2.set_yticks([10**(-6),20])
+ax2.set_xticks([10.0,300])
 ax2.yaxis.set_label_coords(-0.15,0.6)
 ax2.xaxis.set_label_coords(0.5,-0.15)
 plt.text(-0.7, 3.3, '(c)')

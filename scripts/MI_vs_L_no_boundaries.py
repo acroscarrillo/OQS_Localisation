@@ -38,17 +38,17 @@ def MI_vs_L(L_array,run_array,p_array,V,lamb):
 #################
 
 # parameter space
-L_array = np.arange(100,1000,100)
-run_array = np.arange(500,50,-50)
+L_array = np.arange(100,1050,50)
+run_array = np.arange(1000,50,-50)
 # L_array = np.array([400,800,1200,1600,2000])
 # run_array = np.array([500,100,50,50,10])
 # p_array = np.array([0.6,0.9,1,1.13,1.6])
 p_array = np.array([0,0.01,0.1,0.2,0.6,0.97,1.6,4])
 V, lamb = 0, 0
 
-# plotting_data = MI_vs_L(L_array,run_array,p_array,V,lamb)
-# with open("data/MI_vs_L_no_boundaries.ob", 'wb') as fp:
-#     pickle.dump(plotting_data, fp)
+plotting_data = MI_vs_L(L_array,run_array,p_array,V,lamb)
+with open("data/MI_vs_L_no_boundaries.ob", 'wb') as fp:
+    pickle.dump(plotting_data, fp)
 
 with open ("data/MI_vs_L_no_boundaries.ob", 'rb') as fp:
     plotting_data = pickle.load(fp)

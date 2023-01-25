@@ -60,8 +60,8 @@ ax.hist(beta_vol_law_array,label=r"$p=0.4$",color="C1",bins="auto",density=True,
 
 ax.legend(loc="lower right",fontsize=7)
 
-ax.set_ylabel(r"$\rho(n)$",rotation=0)
-ax.set_xlabel(r"$n$")
+ax.set_ylabel(r"$\rho(\tilde{n})$",rotation=0)
+ax.set_xlabel(r"$\tilde{n}$")
 ax.set_yticks([0.0,5])
 ax.set_xlim([0.0,10])
 ax.yaxis.set_label_coords(-0.08,0.5)
@@ -100,7 +100,7 @@ ax_inset.plot(L_array, area_dev, label="Area",lw=1,color="C0")
 print(g_vol, y_intercept_vol)
 print(g_area, y_intercept_area)
 
-ax_inset.set_ylabel(r"$\sigma[n]$",size=9,rotation=0)
+ax_inset.set_ylabel(r"$\sigma[\tilde{n}]$",size=9,rotation=0)
 ax_inset.set_xlabel(r"$L$",size=9)
 
 ax_inset.set_facecolor('white')
