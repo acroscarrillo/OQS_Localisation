@@ -38,7 +38,7 @@ with open ("data/collapse_data.ob", 'rb') as fp:
 # plot data #
 #############
 plt.rcParams['figure.dpi'] = 300
-plt.rcParams['savefig.dpi'] = 300
+plt.rcParams['savefig.dpi'] = 600
 plt.rcParams["text.usetex"] = True
 pt = 0.0138889 
 fig = plt.figure(figsize = (246*pt,250*pt))
@@ -74,7 +74,7 @@ for i, data in enumerate(MI_vs_LA_n_b):
     LA_array, MI_array, MI_err_array, p = data
     if np.round(p,2) !=4.0: 
         g, y_intercept = fit_log_log( LA_array[1:len(LA_array)//4+1],MI_array[1:len(LA_array)//4+1] )
-        ax2.plot(LA_array[1:len(LA_array)//2+1], np.exp(y_intercept)*(LA_array[1:len(LA_array)//2+1]**g),lw=0.6,c=color_ls[i],ls="dashed",label="p="+str(round(p,2))+" g="+str(round(g,2)))
+        ax2.plot(LA_array[1:len(LA_array)//2+1], np.exp(y_intercept)*(LA_array[1:len(LA_array)//2+1]**g),lw=0.6,c=color_ls[i],ls="dashed",label=r"$p=$"+str(round(p,2))+", "+ r'$\Delta$'+"="+str(np.round(g,2)))
         ax2.errorbar(LA_array[1:len(LA_array)//2+1],MI_array[1:len(LA_array)//2+1],fmt=".",yerr=MI_err_array[1:len(LA_array)//2+1],c=color_ls[i],alpha=0.4,ms=0.8,marker="o",lw=1)
 
 ax2.legend(fontsize=4,loc="lower left",framealpha=0.5)
@@ -84,7 +84,10 @@ ax2.set_ylabel(r"$\mathcal{I}$",rotation=180)
 ax2.set_xlabel(r"$L_A$")
 #ax2.xaxis.set_minor_formatter(NullFormatter())
 # ax2.xaxis.set_major_formatter(LogFormatter(labelOnlyBase=False))
-# ax2.yaxis.set_major_formatter(LogFormatter(labelOnlyBase=False))
+# ax2.yaxis.set_major_formatter(LogFormatter(la3belOnlyBase=True))
+
+
+
 # ax2.yaxis.set_minor_formatter(NullFormatter())
 #ax2.xaxis.set_major_locator(NullLocator())
 #ax2.xaxis.set_minor_locator(NullLocator())
@@ -96,7 +99,7 @@ plt.text(-0.8, 3.3, '(c)')
 # MI vs p
 for data in MI_vs_p_n_b:
     p_array, MI_array, MI_err_array, L = data
-    ax3.errorbar(p_array,MI_array,yerr=MI_err_array,label="L="+str(L),ms=0.6,marker="o",lw=0.6)
+    ax3.errorbar(p_array,MI_array,yerr=MI_err_array,label=r"$L=$"+str(L),ms=0.6,marker="o",lw=0.6)
     
 ax3.set_ylabel(r"$\mathcal{I}$",rotation=180)
 ax3.set_xlabel(r"$p$")
@@ -123,4 +126,4 @@ ax3_inset.yaxis.set_label_coords(-0.075,0.6)
 # send it!
 plt.tight_layout()
 plt.show()
-# plt.savefig("somename.png")
+plt.savefig("paper_figs/images/MI_no_boundaries_fig.pdf")
