@@ -82,7 +82,10 @@ ax2.set_xscale("log")
 ax2.set_yscale("log")
 ax2.set_ylabel(r"$\mathcal{I}$",rotation=180)
 ax2.set_xlabel(r"$L_A$")
-#ax2.xaxis.set_minor_formatter(NullFormatter())
+# ax2.xaxis.set_minor_formatter(LogFormatter(),minor_thresholds=None)
+# minor_thresholds=(2, 0.5)
+# ax2.yaxis.set_minor_formatter(LogFormatter(),minor_thresholds=None)
+
 # ax2.xaxis.set_major_formatter(LogFormatter(labelOnlyBase=False))
 # ax2.yaxis.set_major_formatter(LogFormatter(la3belOnlyBase=True))
 
