@@ -38,17 +38,17 @@ def MI_vs_L(L_array,run_array,p_array,V,lamb):
 #################
 
 # parameter space
-L_array = np.arange(100,1000,100)
-run_array = np.arange(500,50,-50)
+L_array = np.arange(100,1050,50)
+run_array = np.arange(1000,50,-50)
 # L_array = np.array([400,800,1200,1600,2000])
 # run_array = np.array([500,100,50,50,10])
 # p_array = np.array([0.6,0.9,1,1.13,1.6])
 p_array = np.array([0,0.01,0.1,0.2,0.6,0.97,1.6,4])
 V, lamb = 0, 0
 
-# plotting_data = MI_vs_L(L_array,run_array,p_array,V,lamb)
-# with open("data/MI_vs_L_no_boundaries.ob", 'wb') as fp:
-#     pickle.dump(plotting_data, fp)
+plotting_data = MI_vs_L(L_array,run_array,p_array,V,lamb)
+with open("data/MI_vs_L_no_boundaries.ob", 'wb') as fp:
+    pickle.dump(plotting_data, fp)
 
 with open ("data/MI_vs_L_no_boundaries.ob", 'rb') as fp:
     plotting_data = pickle.load(fp)
@@ -57,16 +57,21 @@ plt.rcParams['figure.dpi'] = 300
 plt.rcParams['savefig.dpi'] = 300
 pt = 0.0138889 
 fig, ax  = plt.subplots(1,1,figsize = (246*pt,150*pt))
-for data in plotting_data:
+color_ls = ["C0","C1","C2","C3","C4","C5","C6","C7","C8","C9"]
+
+for i, data in enumerate(plotting_data):
     L_array, MI_array, MI_err_array, p = data
-    # gradient = np.around( np.log(MI_array[-1])-np.log(MI_array[0]),2 )
-    # gradient =  np.round((np.log(MI_array[-1])- np.log(MI_array[0]))/(np.log(L_array[-1])-np.log(L_array[0])),2)
-    g =  (y[-1]-y[0])/(x[-1]-x[0])
-    ax.errorbar(L_array,MI_array,yerr=MI_err_array,label="p="+str(p)+", g (log)="+str(g),ms=2,marker="o",lw=1)
+    if np.round(p,2) !=4.0:
+        g, y_intercept = fit_log_log( L_array, MI_array )
+        ax.plot(L_array, np.exp(y_intercept)*(L_array**g),lw=0.6,c=color_ls[i],ls="dashed")
+        # gradient = np.around( np.log(MI_array[-1])-np.log(MI_array[0]),2 )
+        # gradient =  np.round((np.log(MI_array[-1])- np.log(MI_array[0]))/(np.log(L_array[-1])-np.log(L_array[0])),2)
+        # g =  (y[-1]-y[0])/(x[-1]-x[0])
+        ax.errorbar(L_array,MI_array,yerr=MI_err_array,label="p="+str(p)+", g (log)="+str(g),ms=2,marker="o",lw=1)
     
 
-# ax.set_yscale("log")
-# ax.set_xscale("log")
+ax.set_yscale("log")
+ax.set_xscale("log")
 ax.set_ylabel(r"$\mathcal{I}$")
 ax.set_xlabel(r"$L$")
 plt.legend(fontsize=5,loc="lower right")
