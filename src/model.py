@@ -4,6 +4,7 @@ from numba import jit, njit, types, vectorize, prange
 import numpy as np
 from numpy import linalg as LA
 from numpy.linalg import inv
+from scipy import stats
 
 @njit(nogil=True, parallel=False)
 def delta(j,k):
