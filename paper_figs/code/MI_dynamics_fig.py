@@ -8,6 +8,7 @@ dir = os.path.dirname(__file__)
 sys.path.insert(0, os.path.abspath(os.path.join(dir,'..',"..")))
 from src import *
 import pickle #to save python objects
+import numpy as np
 
 # import plotting stuff
 import matplotlib.pyplot as plt
@@ -72,10 +73,10 @@ for i,d in enumerate(data):
     ax0.errorbar(t_array,avg,yerr=err,label=r"$p=$"+p_str[i],ms=1,lw=1,color= color_list[i])
     ax0.axhline(y=data_ness[i],lw=1, color= color_list[i],linestyle="--")
 
-ax0.set_ylabel(r"$\mathcal{I}$",rotation=180)
+ax0.set_ylabel(r"$\mathcal{I}_t$",rotation=0)
 ax0.set_xlabel(r"$t$")
 ax0.set_yticks([0.0,0.3])
-ax0.yaxis.set_label_coords(-0.2,0.6)
+ax0.yaxis.set_label_coords(-0.2,0.45)
 ax0.xaxis.set_label_coords(0.5,-0.13)
 ax0.legend(loc="center right",fontsize=8,framealpha=0.5)
 plt.text(-1.1, 100000, '(a)')
@@ -108,7 +109,7 @@ for i,d in enumerate(data):
     err = stats.sem(d,axis=1)/data_ness[i]
     ax1.errorbar(L_array,avg,yerr=err,label=r"$p=$"+p_str[i],ms=1.2,marker="o",lw=0.8,color= color_list[i],ls="dashed")
 
-ax1.set_ylabel(r"$\frac{\Delta B}{\mathcal{I}_{NESS}}$",rotation=0)
+ax1.set_ylabel(r"$\frac{\Delta B}{\mathcal{I}_{\infty}}$",rotation=0)
 ax1.set_xlabel(r"$L$")
 
 # ax1.legend()
@@ -157,7 +158,7 @@ lines = [Line2D([0], [0], color="black", linewidth=1, linestyle='solid'),Line2D(
 labels = [r"$L=$"+str(L_array[0]), r"$L=$"+str(L_array[1]), r"$L=$"+str(L_array[2])]
 ax2.legend(lines, labels,loc="upper right",fontsize=8,framealpha=0.5)
 
-ax2.set_ylabel(r"$\mathcal{I}_{NESS}$",rotation=0)
+ax2.set_ylabel(r"$\mathcal{I}_{\infty}$",rotation=0)
 ax2.set_xlabel(r"$\lambda$")
 ax2.set_yscale("log")
 ax2.set_xticks([0,5])
