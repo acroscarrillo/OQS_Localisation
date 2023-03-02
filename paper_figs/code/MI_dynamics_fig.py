@@ -31,11 +31,14 @@ plt.rcParams["text.usetex"] = True
 plt.rcParams['figure.dpi'] = 300
 plt.rcParams['savefig.dpi'] = 600
 pt = 0.0138889 
-fig = plt.figure(figsize = (246*pt,250*pt))
-gs = fig.add_gridspec(2,2)
-ax0 = fig.add_subplot(gs[0, 0])
-ax1 = fig.add_subplot(gs[0, 1])
-ax2 = fig.add_subplot(gs[1, :])
+fig = plt.figure(figsize=(246*pt, 250*pt))
+gs = fig.add_gridspec(
+    2, 2, left=0.125, right=0.98, top=0.96, 
+    bottom=0.105, wspace=0.4, hspace=0.25
+)
+ax2 = fig.add_subplot(gs[0, :])
+ax0 = fig.add_subplot(gs[1, 0])
+ax1 = fig.add_subplot(gs[1, 1])
 
 
 color_list = ["C0","C1","C2","C3","C4","C5","C6","C7","C8","C9"]
@@ -79,7 +82,7 @@ ax0.set_yticks([0.0,0.3])
 ax0.yaxis.set_label_coords(-0.2,0.45)
 ax0.xaxis.set_label_coords(0.5,-0.13)
 ax0.legend(loc="center right",fontsize=8,framealpha=0.5)
-plt.text(-1.1, 100000, '(a)')
+ax0.text(-0.2, 1.0, '(b)', transform=ax0.transAxes)
 
 ################################
 # Bump height against L instet #
@@ -122,7 +125,7 @@ ax1.yaxis.set_minor_formatter(NullFormatter())
 ax1.set_yticks([1,0.01])
 ax1.yaxis.set_label_coords(-0.2,0.4)
 ax1.xaxis.set_label_coords(0.5,-0.13)
-plt.text(2.0, 100000, '(b)')
+ax1.text(-0.2, 1.0, '(c)', transform=ax1.transAxes)
 
 # ax1.set_yticks([])
     
@@ -165,13 +168,13 @@ ax2.set_xticks([0,5])
 ax2.yaxis.set_minor_formatter(NullFormatter())
 ax2.set_yticks([10,0.1])
 ax2.yaxis.set_label_coords(-0.1,0.5)
-ax2.xaxis.set_label_coords(0.5,-0.13)
-plt.text(-1.1, 38, '(c)')
+ax2.xaxis.set_label_coords(0.5,-0.05)
+ax2.text(-0.1, 1.0, '(a)', transform=ax2.transAxes)
 
 
 
-plt.tight_layout(w_pad = 1, h_pad=-11)
-plt.subplot_tool()
+#plt.tight_layout(w_pad = 1, h_pad=-11)
+#plt.subplot_tool()
 
 
 plt.show()
